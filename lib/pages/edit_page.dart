@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pm_todo/models/todo.dart';
 import 'package:pm_todo/utils/collection.dart';
 
+// ignore: must_be_immutable
 class EditPage extends StatelessWidget {
   EditPage({super.key, required this.initData, required this.todo});
   final Function initData;
