@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pm_todo/pages/todo/home_page.dart';
 
-import 'home_page.dart';
-
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class SignupPage extends StatelessWidget {
+  SignupPage({super.key});
   final emailControl = TextEditingController();
   final passwordControl = TextEditingController();
 
@@ -13,6 +12,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('email'),
           TextField(
@@ -22,20 +22,23 @@ class LoginPage extends StatelessWidget {
           TextField(
             controller: passwordControl,
           ),
-          FilledButton(
-            onPressed: () {
-              login(context);
-            },
-            child: const Text('Login'),
+          SizedBox(
+            width: double.maxFinite,
+            child: FilledButton(
+              onPressed: () {
+                signup(context);
+              },
+              child: const Text('Signup'),
+            ),
           ),
         ],
       ),
     );
   }
 
-  Future<void> login(final context) async {
+  Future<void> signup(final context) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailControl.text,
         password: passwordControl.text,
       );
@@ -46,11 +49,13 @@ class LoginPage extends StatelessWidget {
         ),
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
       }
+    } catch (e) {
+      print(e);
     }
   }
 }

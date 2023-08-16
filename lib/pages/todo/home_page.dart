@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pm_todo/models/todo.dart';
-import 'package:pm_todo/pages/edit_page.dart';
-import 'package:pm_todo/pages/save_page.dart';
+import 'package:pm_todo/pages/todo/edit_page.dart';
+import 'package:pm_todo/pages/todo/save_page.dart';
 import 'package:pm_todo/utils/collection.dart';
 
 class HomePage extends StatefulWidget {

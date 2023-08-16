@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pm_todo/pages/home_page.dart';
+import 'package:flutter/material.dart';
 
-class SignupPage extends StatelessWidget {
-  SignupPage({super.key});
+import '../todo/home_page.dart';
+
+class LoginPage extends StatelessWidget {
+  LoginPage({super.key});
   final emailControl = TextEditingController();
   final passwordControl = TextEditingController();
 
@@ -12,7 +13,6 @@ class SignupPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('email'),
           TextField(
@@ -22,23 +22,20 @@ class SignupPage extends StatelessWidget {
           TextField(
             controller: passwordControl,
           ),
-          SizedBox(
-            width: double.maxFinite,
-            child: FilledButton(
-              onPressed: () {
-                signup(context);
-              },
-              child: const Text('Signup'),
-            ),
+          FilledButton(
+            onPressed: () {
+              login(context);
+            },
+            child: const Text('Login'),
           ),
         ],
       ),
     );
   }
 
-  Future<void> signup(final context) async {
+  Future<void> login(final context) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailControl.text,
         password: passwordControl.text,
       );
@@ -49,13 +46,11 @@ class SignupPage extends StatelessWidget {
         ),
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
       }
-    } catch (e) {
-      print(e);
     }
   }
 }

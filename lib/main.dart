@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pm_todo/pages/home_page.dart';
-import 'package:pm_todo/pages/login_page.dart';
-import 'package:pm_todo/pages/signup_page.dart';
+import 'package:pm_todo/pages/todo/home_page.dart';
+import 'package:pm_todo/pages/auth/login_page.dart';
+import 'package:pm_todo/pages/auth/signup_page.dart';
+import 'package:pm_todo/pages/tab_exmp.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginPage(),
+      home: const TabExamp(),
     );
   }
 }
