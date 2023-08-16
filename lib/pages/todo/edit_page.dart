@@ -32,10 +32,11 @@ class EditPage extends StatelessWidget {
   }
 
   Future<void> editTodo(BuildContext context) async {
-    await Collection.posts.doc(todo.id).set({
+    final data = {
       'id': todo.id,
       'msg': msgControl.text,
-    });
+    };
+    await Collection.posts.doc(todo.id).set(data);
     msgControl.clear();
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context)

@@ -31,10 +31,11 @@ class SavePage extends StatelessWidget {
 
   Future<void> saveTodo(BuildContext context) async {
     String id = Timestamp.now().millisecondsSinceEpoch.toString();
-    await Collection.posts.doc(id).set({
+    final data = {
       'id': id,
       'msg': msgControl.text,
-    });
+    };
+    await Collection.posts.doc(id).set(data);
     msgControl.clear();
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context)
